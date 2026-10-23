@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audianta - AI Voice Generator</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#050817;color:#f5f6ff;font-family:Arial,sans-serif}
+header{padding:18px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #24265c}
+.logo{font-size:25px;font-weight:bold;color:#c66bff}
+nav a{color:#ddd;text-decoration:none;margin:0 8px;font-size:14px}
+button{border:0;border-radius:12px;padding:13px 18px;background:linear-gradient(100deg,#a600ff,#493bff);color:white;font-weight:bold;cursor:pointer}
+.hero{padding:45px 5%;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+h1{font-size:clamp(32px,5vw,55px);line-height:1.12;margin-bottom:12px}
+.purple{color:#d45bff}
+p{color:#b8c3e4;line-height:1.7}
+.panel{background:#0c1530;border:1px solid #343a79;border-radius:20px;padding:22px;box-shadow:0 0 25px #4825ff20}
+textarea,select{width:100%;background:#071027;color:white;border:1px solid #343e72;border-radius:10px;padding:13px;margin:8px 0 15px;font-size:15px}
+textarea{height:130px;resize:vertical}
+label{font-size:13px;color:#c9d5ff}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.generate{width:100%;font-size:16px;margin-top:5px}
+.voices{padding:15px 5% 35px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.voice{padding:18px 10px;text-align:center;background:#101a38;border:1px solid #30366d;border-radius:14px}
+.circle{font-size:28px}
+.features{padding:20px 5%;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feature{padding:20px;background:#0c1530;border:1px solid #30366d;border-radius:14px}
+footer{text-align:center;padding:25px;border-top:1px solid #292c58;color:#aab4d6}
+#status{font-size:13px;color:#bfc8ff}
+@media(max-width:700px){
+nav{display:none}.hero{grid-template-columns:1fr;padding-top:30px}
+.cards{grid-template-columns:repeat(2,1fr)}
+.features{grid-template-columns:1fr}
+.panel{padding:16px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">♫ Audianta</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#voices">Voices</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+  </nav>
+  <button onclick="document.getElementById('generator').scrollIntoView({behavior:'smooth'})">Try Free</button>
+</header>
+
+<section class="hero" id="home">
+  <div>
+    <p>✦ YOUR AI VOICE STUDIO</p>
+    <h1>Turn Your Words<br>Into Amazing <span class="purple">Voice</span></h1>
+    <p>তোমার লেখাকে কণ্ঠে রূপ দাও। গল্প, ভিডিও ও মুভি এক্সপ্লেইনের জন্য তৈরি করো নিজের অডিও।</p>
+    <button onclick="document.getElementById('generator').scrollIntoView({behavior:'smooth'})">Get Started Free →</button>
+    <p>🎙️ AI Voice Studio · Text to Speech</p>
+  </div>
+
+  <div class="panel" id="generator">
+    <h2>♫ AI Voice Generator</h2>
+    <p>Turn your text into speech</p>
+    <label for="text">তোমার লেখা এখানে দাও</label>
+    <textarea id="text" maxlength="3000" placeholder="এখানে তোমার গল্প বা স্ক্রিপ্ট লিখো..."></textarea>
+    <div class="controls">
+      <div><label for="voice">Voice</label>
+        <select id="voice">
+          <option value="female">Young Female</option>
+          <option value="male">Young Male</option>
+        </select>
+      </div>
+      <div><label for="language">Language</label>
+        <select id="language">
+          <option value="bn-BD">Bangla</option>
+          <option value="en-US">English</option>
+          <option value="hi-IN">Hindi</option>
+        </select>
+      </div>
+      <div><label for="speed">Speed</label>
+        <select id="speed">
+          <option value="0.8">Slow</option>
+          <option value="1" selected>Normal</option>
+          <option value="1.2">Fast</option>
+        </select>
+      </div>
+      <div><label for="style">Style</label>
+        <select id="style">
+          <option>Normal</option>
+          <option>Storytelling</option>
+          <option>Movie Explain</option>
+          <option>Gaming</option>
+        </select>
+      </div>
+    </div>
+    <button class="generate" onclick="generateVoice()">♫ Generate Voice</button>
+    <p id="status">প্রস্তুত — লেখা দিয়ে শুরু করো।</p>
+    <audio id="player" controls style="width:100%;display:none"></audio>
+    <a id="download" style="display:none;color:#dcaaff" download="audianta-voice.wav">Download Audio</a>
+  </div>
+</section>
+
+<section class="voices" id="voices">
+  <h2>Choose Your Voice</h2>
+  <div class="cards">
+    <div class="voice"><div class="circle">👩🏻</div><b>Mim</b><p>Young Female</p></div>
+    <div class="voice"><div class="circle">👨🏻</div><b>Rafi</b><p>Young Male</p></div>
+    <div class="voice"><div class="circle">👩🏽</div><b>Ayesha</b><p>Adult Female</p></div>
+    <div class="voice"><div class="circle">👨🏽</div><b>Shuvo</b><p>Adult Male</p></div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="feature"><h3>🎙️ AI Voice</h3><p>লেখা থেকে স্পিচ তৈরির সুবিধা।</p></div>
+  <div class="feature"><h3>🌍 Multiple Languages</h3><p>ভাষা নির্বাচন ও ব্রাউজার সমর্থন অনুযায়ী ভয়েস।</p></div>
+  <div class="feature"><h3>📱 Mobile Friendly</h3><p>ফোন ও কম্পিউটারের জন্য উপযোগী ডিজাইন।</p></div>
+</section>
+
+<section class="voices" id="pricing">
+  <div class="panel">
+    <h2>✨ Audianta Pro</h2>
+    <p>ভবিষ্যতে আরও ভয়েস ও উন্নত ফিচার যোগ করা হবে।</p>
+    <button onclick="alert('Pro প্ল্যান এখনো চালু হয়নি।')">Coming Soon</button>
+  </div>
+</section>
+
+<footer>♫ Audianta · Turn Text Into Voice</footer>
+
+<script>
+function generateVoice(){
+  const text=document.getElementById('text').value.trim();
+  const status=document.getElementById('status');
+  const lang=document.getElementById('language').value;
+  const voice=document.getElementById('voice').value;
+  const speed=Number(document.getElementById('speed').value);
+  if(!text){status.textContent='আগে কিছু লেখা লিখো।';return}
+  if(!('speechSynthesis' in window)){
+    status.textContent='এই ব্রাউজারে Speech Synthesis সমর্থিত নয়।';
+    return;
+  }
+  speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(text);
+  utterance.lang=lang;
+  utterance.rate=speed;
+  const voices=speechSynthesis.getVoices();
+  const match=voices.find(v=>v.lang.toLowerCase().startsWith(lang.toLowerCase()) &&
+    (voice==='female' ? /female|woman|zira|samantha/i.test(v.name) :
+    /male|man|david|daniel/i.test(v.name)));
+  const anyLanguageVoice=voices.find(v=>v.lang.toLowerCase().startsWith(lang.toLowerCase()));
+  if(match || anyLanguageVoice) utterance.voice=match || anyLanguageVoice;
+  utterance.onstart=()=>status.textContent='ভয়েস চলছে...';
+  utterance.onend=()=>status.textContent='প্লেব্যাক শেষ। এই প্রাথমিক সংস্করণে MP3 ডাউনলোড এখনো যুক্ত হয়নি।';
+  utterance.onerror=()=>status.textContent='ভয়েস চালানো যায়নি। অন্য ভাষা বা ব্রাউজারের ভয়েস চেষ্টা করো।';
+  speechSynthesis.speak(utterance);
+}
+</script>
+</body>
+</html>
